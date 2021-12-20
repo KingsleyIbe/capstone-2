@@ -65,11 +65,10 @@ Then run the server:
 - Twitter: [@twitterhandle](https://twitter.com/ibekingsley2)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/kingsley-ibe-5669a5134)
 
-## Author 2
-
-- GitHub: [@githubhandle](https://github.com/kingsleyibe)
-- Twitter: [@twitterhandle](https://twitter.com/ibekingsley2)
-- LinkedIn: [LinkedIn](https://www.linkedin.com/in/kingsley-ibe-5669a5134)
+ **Author 2** 
+- GitHub: [@githubhandle](https://github.com/Mithi-code)
+- Twitter: [@twitterhandle](https://twitter.com/LazyMithlesh)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/mithlesh-kumar-564a97221/)
 
 ## 🤝 Contributing
 
