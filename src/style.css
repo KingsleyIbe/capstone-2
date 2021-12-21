@@ -1,4 +1,50 @@
-body {
-  background: whitesmoke;
-  color: green;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  display: flex;
+  padding: 30px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: black;
+}
+
+.menu-list {
+  display: flex;
+  gap: 100px;
+  padding: 30px;
+}
+
+.menu-list li {
+  list-style: none;
+}
+
+.menu-list li a {
+  text-decoration: none;
+  color: black;
+  padding: 5px;
+  font-size: 20px;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+}
+
+footer p {
+  border: 3px solid black;
+  font-size: 20px;
+  padding: 50px 100px;
+  position: fixed;
+  bottom: 0;
 }
