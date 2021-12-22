@@ -51,28 +51,40 @@ document.querySelectorAll('.cmntBtn-button').forEach((item) => {
   item.addEventListener('click', () => {
     const showComment = document.querySelector('.commentPopUp');
     console.log('Clicked');
+    elem.style.display = 'none';
+    for (let i = 0; i < data.length; i++){
     showComment.innerHTML = `
     <div class="popup">
+    <span>
+    <i class="fas fa-times 4x"></i>
+    </span>
         <div class="popup-info">
-            <img src="https://static.remove.bg/remove-bg-web/6cc620ebfb5922c21227f533a09d892abd65defa/assets/start_remove-c851bdf8d3127a24e2d137a55b1b427378cd17385b01aec6e59d5d4b5f39d2ec.png" alt="">
+            <img src=${data[i].image.medium} alt="">
         </div>
-        <p>Name</p>
-        <div>
-            <p>something</p>
-            <p>something</p>
-            <p>something</p>
-            <p>something</p>
+        <p class="name">${data[i].name}</p>
+        <div class="details">
+            <p>${data[i].name}</p>
+            <p>${data[i].language}</p>
+            <p>${data[i].runtime}</p>
+            <p>${data[i].status}</p>
         </div>
-        <h5>comments(count)</h5>
-        <form action="">
-            <input type="text">
-            <input type="text">
-            <input type="submit" value="Submit">
+        <h5 class="comment">comments(count)</h5>
+        <form action="" class="commentForm">
+            <label>Add a comment</label>
+            <input type="text" placeholder="Your name">
+            <textarea type="text" placeholder="Your comments"></textarea>
+            <button type="submit" class="commentBtn">Comment</button>
         </form>
     </div>
 `
+    }
 showComment.style.display = 'block';
-    
+ 
+document.querySelector('.fa-times').addEventListener('click', () => {
+  showComment.style.display = 'none';
+  elem.style.display = 'grid';
+});
+
   });
 });
 }

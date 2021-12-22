@@ -96,5 +96,46 @@ footer p {
 }
 
 .commentPopUp {
-  display: none;
+  display: flex;
+  margin-left: 150px;
+  width: 80%;
+  border: 1px solid #000;
+}
+
+.popup-info {
+  display: flex;
+  justify-content: center;
+}
+
+.fa-times {
+  display: flex;
+  justify-content: end;
+}
+
+.name {
+  display: flex;
+  justify-content: center;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  gap: 30px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.comment {
+  display: flex;
+  justify-content: center;
+}
+
+.commentForm {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 20%;
+  gap: 10px;
+  margin-left: 550px;
 }
