@@ -53,8 +53,15 @@ async function count(obj) {
     const countData = await response.json();
 }
 
-document.querySelector('.cmntBtn').innerHTML = `
-`
+
+const comment = document.querySelector('.reBtn')
+comment.addEventListener('click', () => {
+  console.log('clicked')
+  // comment.innerHTML = `
+  // <div>Test</div>
+  // `
+})
+
 
 
 
