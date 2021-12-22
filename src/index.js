@@ -74,6 +74,7 @@ document.querySelectorAll('.cmntBtn-button').forEach((item) => {
             <p>${data[i].status}</p>
         </div>
         <h5 class="comment">comments(count)</h5>
+        <ul id="displayComments"></ul>
         <form action="" class="commentForm">
             <label>Add a comment</label>
             <input type="text" id="username" placeholder="Your name">
@@ -133,8 +134,19 @@ submitBtn.addEventListener('click', (e) => {
   }
 });
 
+const commentElement = document.querySelector('#displayComments')
+const showComments = (username, comment) => {
+  const listElem = document.createElement('li');
+  const listElem1 = document.createElement('li');
+
+  listElem1.innerHTML = `${username}: ${comment} `;
+
+  listElem.appendChild(listElem1);
+  commentElement.appendChild(listElem);
+};
+
 const displayComments = async () => {
   const allComments = await getComments();
-  allComments.forEach((comment) => scoreElement(comment.username, comment.comment));
+  allComments.forEach((comment) => showComments(comment.username, comment.comment));
 };
 displayComments();
