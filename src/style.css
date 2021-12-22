@@ -56,7 +56,7 @@ section .cards {
 }
 
 i {
-color: tomato;
+  color: tomato;
 }
 
 .likes-count {
