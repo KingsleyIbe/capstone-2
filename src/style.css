@@ -4,47 +4,96 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: cadetblue;
+}
+
 header {
   display: flex;
-  padding: 30px;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  padding: 10px;
   margin-top: 50px;
 }
 
-.logo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: black;
+h1 {
+  font-size: 50px;
+  text-align: center;
 }
 
-.menu-list {
+nav ul {
   display: flex;
-  gap: 100px;
-  padding: 30px;
-}
-
-.menu-list li {
   list-style: none;
+  justify-content: center;
+  align-items: center;
 }
 
-.menu-list li a {
-  text-decoration: none;
-  color: black;
-  padding: 5px;
-  font-size: 20px;
+nav ul li {
+  margin: 30px;
+  font-size: 30px;
+  border: 1px solid purple;
+  border-radius: 18px;
+  padding: 10px;
+  background-color: seashell;
+}
+
+section .cards {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  place-items: center;
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.img {
+  width: 400px;
+  height: 550px;
+}
+
+.description {
+  font-size: 30px;
+  text-align: center;
+}
+
+i {
+  color: tomato;
+}
+
+.likes-count {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+}
+
+.likes-count span {
+  font-size: 25px;
+}
+
+.button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  font-size: 25px;
+  width: 250px;
+  height: 40px;
+  margin: 5px;
+  background-color: sandybrown;
 }
 
 footer {
   display: flex;
   justify-content: center;
+  align-items: center;
+  border: 3px solid black;
+  height: 180px;
 }
 
 footer p {
-  border: 3px solid black;
   font-size: 20px;
-  padding: 50px 100px;
-  position: fixed;
-  bottom: 0;
+  font-size: 40px;
 }
