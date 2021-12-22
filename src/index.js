@@ -27,7 +27,7 @@ for (let i = 0; i < data.length; i++){
          <img src=${data[i].image.medium} alt="" class="img">
             <p class=description>${data[i].name}</p>
 			<div class='likes-count'> 
-      <i class="far fa-heart fa-3x" id='movie-${data[i].id}'></i>
+      <i class="fas fa-heart fa-3x" id='movie-${data[i].id}'></i>
       <span>Likes-${data[i].likes}</span>
       </div>
             <div class="button">
@@ -41,20 +41,18 @@ document.querySelectorAll('i').forEach((like) => {
 	like.addEventListener('click', ()=> {
       const obj = {'item_id': like.id};
       const id = Number(like.id.split("-")[1]);
-      obj.likes = data.find(x => x.id === id).likes+1;
-      count(obj)
-      getShows()
+      const movie = data.find(x => x.id === id);
+      movie.likes++;
+      obj.likes =movie.likes;
+      like.parentNode.querySelector('span').innerText = 'likes-' + obj.likes;
+      count(obj);
 	})
 })
 }
 
 async function count(obj) {
 	const response = await fetch(countUrl, {method: 'POST',headers: {'Content-Type':'application/json'},body:JSON.stringify(obj)});
-    const countData = await response.json();
-}
-
-document.querySelector('.cmntBtn').innerHTML = `
-`
+};
 
 
 
