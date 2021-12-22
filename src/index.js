@@ -54,7 +54,9 @@ async function count(obj) {
 	const response = await fetch(countUrl, {method: 'POST',headers: {'Content-Type':'application/json'},body:JSON.stringify(obj)});
 };
 
-
+document.getElementsByClassName('reBtn').addEventListener('click', () => {
+  console.log('clicked')
+})
 
 
 	
