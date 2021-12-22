@@ -1,4 +1,5 @@
 import './style.css';
+import { postComments, getComments } from './comment';
 
 const url = "https://api.tvmaze.com/shows";
 const countUrl = "https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/Q4ShCASnnzP55bg7hv5u/likes"
@@ -21,7 +22,6 @@ getShows();
  function render(data){
 	elem.innerHTML = '';
 for (let i = 0; i < data.length; i++){
-
 	elem.innerHTML += `
 	<div class="cards-info">
          <img src=${data[i].image.medium} alt="" class="img">
@@ -48,12 +48,17 @@ document.querySelectorAll('i').forEach((like) => {
 })
 
 document.querySelectorAll('.cmntBtn-button').forEach((item) => {
-  item.addEventListener('click', () => {
+  item.addEventListener('click', (id) => {
+    // const obj = {'item_id': item.id};
+    // id = Number(item.id.split("-")[1]);
+    id = data.id;
+    
     const showComment = document.querySelector('.commentPopUp');
-    console.log('Clicked');
     elem.style.display = 'none';
     for (let i = 0; i < data.length; i++){
-    showComment.innerHTML = `
+      // obj.item = data.find(x => x.id === id)
+      console.log(id)
+      showComment.innerHTML = `
     <div class="popup">
     <span>
     <i class="fas fa-times 4x"></i>
@@ -71,9 +76,10 @@ document.querySelectorAll('.cmntBtn-button').forEach((item) => {
         <h5 class="comment">comments(count)</h5>
         <form action="" class="commentForm">
             <label>Add a comment</label>
-            <input type="text" placeholder="Your name">
-            <textarea type="text" placeholder="Your comments"></textarea>
-            <button type="submit" class="commentBtn">Comment</button>
+            <input type="text" id="username" placeholder="Your name">
+            <textarea type="text" id="comment" placeholder="Your comments"></textarea>
+            <p id="error"></p>
+            <button type="submit" id="submit" class="commentBtn">Comment</button>
         </form>
     </div>
 `
@@ -97,3 +103,38 @@ async function count(obj) {
       body:JSON.stringify(obj)});
     const countData = await response.json();
 };
+
+
+const clearInputsFields = () => {
+  const userName = document.querySelector('#username');
+  const userComment = document.querySelector('#comment');
+
+  userName.value = '';
+  userComment.value = '';
+};
+
+const submitBtn = document.querySelector('#submit');
+submitBtn.addEventListener('click', (e) => {
+  const userName = document.querySelector('#username').value;
+  const userComment = document.querySelector('#comment').value;
+  const itemId = data.length++;
+
+  e.preventDefault();
+
+  if (userName === '' || userComment === '') {
+    const displayError = document.querySelector('#error');
+    displayError.innerHTML = '*All fields must be filled';
+    setTimeout(() => {
+      displayError.remove();
+    }, 5000);
+  } else {
+    postComments(itemId, userName, userComment);
+    clearInputsFields();
+  }
+});
+
+const displayComments = async () => {
+  const allComments = await getComments();
+  allComments.forEach((comment) => scoreElement(comment.username, comment.comment));
+};
+displayComments();
