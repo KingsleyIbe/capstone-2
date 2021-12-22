@@ -31,8 +31,8 @@ for (let i = 0; i < data.length; i++){
       <span>Likes-${data[i].likes}</span>
       </div>
             <div class="button">
-              <button>Comments</button>
-              <button>Reservations</button>
+              <button class="cmntBtn-button">Comments</button>
+              <button class='reBtn'>Reservations</button>
             </div>
           </div>
         </div>`	
@@ -43,7 +43,7 @@ document.querySelectorAll('i').forEach((like) => {
       const id = Number(like.id.split("-")[1]);
       obj.likes = data.find(x => x.id === id).likes+1;
       count(obj)
-      console.log(obj);
+      getShows()
 	})
 })
 }
@@ -52,6 +52,9 @@ async function count(obj) {
 	const response = await fetch(countUrl, {method: 'POST',headers: {'Content-Type':'application/json'},body:JSON.stringify(obj)});
     const countData = await response.json();
 }
+
+document.querySelector('.cmntBtn').innerHTML = `
+`
 
 
 
