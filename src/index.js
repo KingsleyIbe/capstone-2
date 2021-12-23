@@ -124,6 +124,7 @@ async function getShows() {
   const response1 = await fetch(countUrl);
   const countData = await response1.json();
   for (let i = 0; i < data.length; i += 1) {
+    /* eslint-disable-next-line */
     const count = countData.find((x) => x.item_id === `movie-${data[i].id}`);
     data[i].likes = count ? count.likes : 0;
   }
