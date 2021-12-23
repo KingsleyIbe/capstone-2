@@ -1,29 +1,29 @@
 import './style.css';
 import { postComments, getComments } from './comment.js';
 
-const url = "https://api.tvmaze.com/shows";
-const countUrl = "https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/Q4ShCASnnzP55bg7hv5u/likes"
+const url = 'https://api.tvmaze.com/shows';
+const countUrl = 'https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/Q4ShCASnnzP55bg7hv5u/likes';
 const elem = document.querySelector('.cards');
 let data;
 
 async function getShows() {
-    const response = await fetch(url);
-    data = await response.json();
-    const response1 = await fetch(countUrl);
-    const countData = await response1.json();
-    for (let i = 0; i < data.length; i++) {
-        const count = countData.find(x => x['item_id'] === `movie-${data[i].id}`);
-        data[i].likes = count ? count.likes : 0;
-    }
-    render(data);
+  const response = await fetch(url);
+  data = await response.json();
+  const response1 = await fetch(countUrl);
+  const countData = await response1.json();
+  for (let i = 0; i < data.length; i++) {
+    const count = countData.find((x) => x.item_id === `movie-${data[i].id}`);
+    data[i].likes = count ? count.likes : 0;
+  }
+  render(data);
 }
 getShows();
 
 function render(data) {
-    document.querySelector('h1').innerText += ` (${data.length})`
-    elem.innerHTML = '';
-    for (let i = 0; i < data.length; i++) {
-        elem.innerHTML += `
+  document.querySelector('h1').innerText += ` (${data.length})`;
+  elem.innerHTML = '';
+  for (let i = 0; i < data.length; i++) {
+    elem.innerHTML += `
 	<div class="cards-info" id='movie-${data[i].id}'>
          <img src=${data[i].image.medium} alt="" class="img">
             <p class=description>${data[i].name}</p>
@@ -36,29 +36,29 @@ function render(data) {
               <button class='reBtn'>Reservations</button>
             </div>
           </div>
-        </div>`
-    }
-    document.querySelectorAll('i').forEach((like) => {
-        like.addEventListener('click', () => {
-            const obj = { 'item_id': like.id };
-            const id = Number(like.parentNode.parentNode.id.split("-")[1]);
-            const movie = data.find(x => x.id === id);
-            movie.likes++;
-            obj.likes = movie.likes;
-            like.parentNode.querySelector('span').innerText = 'Likes-' + obj.likes;
-            count(obj);
-        })
-    })
+        </div>`;
+  }
+  document.querySelectorAll('i').forEach((like) => {
+    like.addEventListener('click', () => {
+      const obj = { item_id: like.id };
+      const id = Number(like.parentNode.parentNode.id.split('-')[1]);
+      const movie = data.find((x) => x.id === id);
+      movie.likes++;
+      obj.likes = movie.likes;
+      like.parentNode.querySelector('span').innerText = `Likes-${obj.likes}`;
+      count(obj);
+    });
+  });
 
-    document.querySelectorAll('.cmntBtn-button').forEach((item) => {
-                item.addEventListener('click', async() => {
-                            const id = Number(item.parentNode.parentNode.id.split("-")[1]);
-                            const movie = data.find(x => x.id === id);
-                            const showComment = document.querySelector('.commentPopUp');
-                            showComment.style.display = 'block';
-                            const comments = await getComments(item.parentNode.parentNode.id);
-                            console.log(comments)
-                            showComment.innerHTML = `
+  document.querySelectorAll('.cmntBtn-button').forEach((item) => {
+    item.addEventListener('click', async () => {
+      const id = Number(item.parentNode.parentNode.id.split('-')[1]);
+      const movie = data.find((x) => x.id === id);
+      const showComment = document.querySelector('.commentPopUp');
+      showComment.style.display = 'block';
+      const comments = await getComments(item.parentNode.parentNode.id);
+      console.log(comments);
+      showComment.innerHTML = `
     <div class="popup">
     <span>
     <i class="fas fa-times fa-3x"></i>
@@ -75,7 +75,7 @@ function render(data) {
         </div>
         <h5 class="comment">comments(${comments.length})</h5>
         <ul id="displayComments">
-        ${comments.error ? '' : comments.map(c => `<li><b>${c.username}</b> ${c.comment}</li>`)}
+        ${comments.error ? '' : comments.map((c) => `<li><b>${c.username}</b> ${c.comment}</li>`)}
         </ul>
             <h5>Add a comment</h5>
             <div class="edit">
@@ -85,7 +85,7 @@ function render(data) {
             <button type="submit" id="submit" class="commentBtn">Comment</button>
             </div>
     </div>
-`
+`;
       document.querySelector('.fa-times').addEventListener('click', () => {
         showComment.style.display = 'none';
       });
@@ -102,13 +102,13 @@ function render(data) {
           }, 5000);
         } else {
           const obj = {
-            "item_id": item.parentNode.parentNode.id,
-            "username": userName,
-            "comment": userComment
+            item_id: item.parentNode.parentNode.id,
+            username: userName,
+            comment: userComment,
           };
           postComments(obj);
           clearInputsFields();
-          const commentElement = document.querySelector('#displayComments')
+          const commentElement = document.querySelector('#displayComments');
           commentElement.innerHTML += `<li><b>${obj.username}</b> ${obj.comment}</li>`;
           console.log(comments.length);
         }
@@ -122,10 +122,9 @@ async function count(obj) {
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(obj)
+      body: JSON.stringify(obj),
     });
-};
-
+}
 
 const clearInputsFields = () => {
   const userName = document.querySelector('#username');
