@@ -55,7 +55,7 @@ section .cards {
   text-align: center;
 }
 
-i {
+.fa-heart {
   color: tomato;
 }
 
@@ -68,12 +68,6 @@ i {
 
 .likes-count span {
   font-size: 25px;
-
-}
-
-i {
-  color: tomato;
-
 }
 
 .button {
@@ -105,12 +99,16 @@ footer p {
 }
 
 .commentPopUp {
-  width: 300px;
   display: flex;
-  width: 80%;
-  background-color: yellowgreen;
+  background-color: cadetblue;
   margin: auto;
   font-size: 30px;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
 }
 
 .popup-info {
