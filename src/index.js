@@ -6,19 +6,6 @@ const countUrl = 'https://us-central1-involvement-api.cloudfunctions.net/capston
 const elem = document.querySelector('.cards');
 let data;
 
-async function getShows() {
-  const response = await fetch(url);
-  data = await response.json();
-  const response1 = await fetch(countUrl);
-  const countData = await response1.json();
-  for (let i = 0; i < data.length; i++) {
-    const count = countData.find((x) => x.item_id === `movie-${data[i].id}`);
-    data[i].likes = count ? count.likes : 0;
-  }
-  render(data);
-}
-getShows();
-
 function render(data) {
   document.querySelector('h1').innerText += ` (${data.length})`;
   elem.innerHTML = '';
@@ -50,6 +37,14 @@ function render(data) {
     });
   });
 
+  const clearInputsFields = () => {
+    const userName = document.querySelector('#username');
+    const userComment = document.querySelector('#comment');
+  
+    userName.value = '';
+    userComment.value = '';
+  };
+  
   document.querySelectorAll('.cmntBtn-button').forEach((item) => {
     item.addEventListener('click', async () => {
       const id = Number(item.parentNode.parentNode.id.split('-')[1]);
@@ -57,7 +52,6 @@ function render(data) {
       const showComment = document.querySelector('.commentPopUp');
       showComment.style.display = 'block';
       const comments = await getComments(item.parentNode.parentNode.id);
-      console.log(comments);
       showComment.innerHTML = `
     <div class="popup">
     <span>
@@ -110,12 +104,24 @@ function render(data) {
           clearInputsFields();
           const commentElement = document.querySelector('#displayComments');
           commentElement.innerHTML += `<li><b>${obj.username}</b> ${obj.comment}</li>`;
-          console.log(comments.length);
         }
       });
     });
   });
 }
+
+async function getShows() {
+  const response = await fetch(url);
+  data = await response.json();
+  const response1 = await fetch(countUrl);
+  const countData = await response1.json();
+  for (let i = 0; i < data.length; i++) {
+    const count = countData.find((x) => x.item_id === `movie-${data[i].id}`);
+    data[i].likes = count ? count.likes : 0;
+  }
+  render(data);
+}
+getShows();
 
 async function count(obj) {
   const response = await fetch(countUrl,
@@ -125,11 +131,3 @@ async function count(obj) {
       body: JSON.stringify(obj),
     });
 }
-
-const clearInputsFields = () => {
-  const userName = document.querySelector('#username');
-  const userComment = document.querySelector('#comment');
-
-  userName.value = '';
-  userComment.value = '';
-};

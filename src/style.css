@@ -103,7 +103,7 @@ footer p {
   background-color: cadetblue;
   margin: auto;
   font-size: 30px;
-  position: fixed;
+  /* position: fixed; */
   top: 0;
   left: 0;
   z-index: 1;
