@@ -18,6 +18,7 @@ const postComments = async (itemId, username, comment) => {
     const resData = await response.json();
     const data = await resData.result;
     return data;
+    console.log(data)
   };
 
   export { postComments, getComments };
