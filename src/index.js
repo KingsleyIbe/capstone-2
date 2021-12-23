@@ -26,7 +26,7 @@ function render(data) {
         </div>`;
   }
   async function count(obj) {
-    const response = await fetch(countUrl,
+    await fetch(countUrl,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
