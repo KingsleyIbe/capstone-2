@@ -55,7 +55,7 @@ section .cards {
     text-align: center;
 }
 
-i {
+.fa-heart {
     color: tomato;
 }
 
@@ -68,10 +68,6 @@ i {
 
 .likes-count span {
     font-size: 25px;
-}
-
-i {
-    color: tomato;
 }
 
 .button {
