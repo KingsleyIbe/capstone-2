@@ -44,7 +44,7 @@ function render(data) {
     userName.value = '';
     userComment.value = '';
   };
-  
+
   document.querySelectorAll('.cmntBtn-button').forEach((item) => {
     item.addEventListener('click', async () => {
       const id = Number(item.parentNode.parentNode.id.split('-')[1]);
