@@ -1,5 +1,5 @@
 import './style.css';
-import { postComments, getComments } from './comment';
+import { postComments, getComments } from './comment.js';
 
 const url = "https://api.tvmaze.com/shows";
 const countUrl = "https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/Q4ShCASnnzP55bg7hv5u/likes"
@@ -53,7 +53,7 @@ document.querySelectorAll('.cmntBtn-button').forEach((item) => {
   item.addEventListener('click', (id) => {
     // const obj = {'item_id': item.id};
     // id = Number(item.id.split("-")[1]);
-    id = data.id;
+    // id = data.id;
     
     const showComment = document.querySelector('.commentPopUp');
     elem.style.display = 'none';
@@ -77,7 +77,7 @@ document.querySelectorAll('.cmntBtn-button').forEach((item) => {
         </div>
         <h5 class="comment">comments(count)</h5>
         <ul id="displayComments"></ul>
-        <form action="" class="commentForm">
+        <form class="commentForm">
             <label>Add a comment</label>
             <input type="text" id="username" placeholder="Your name">
             <textarea type="text" id="comment" placeholder="Your comments"></textarea>
@@ -118,6 +118,7 @@ const clearInputsFields = () => {
 
 const submitBtn = document.querySelector('#submit');
 submitBtn.addEventListener('click', (e) => {
+  console.log('clicked')
   const userName = document.querySelector('#username').value;
   const userComment = document.querySelector('#comment').value;
   const itemId = data.length++;
