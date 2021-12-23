@@ -64,7 +64,10 @@ section .cards {
 
 .likes-count span {
   font-size: 25px;
-  color: red;
+}
+
+i {
+  color: tomato;
 }
 
 .button {
@@ -96,15 +99,18 @@ footer p {
 }
 
 .commentPopUp {
+  width: 300px;
   display: flex;
-  margin-left: 150px;
   width: 80%;
-  border: 1px solid #000;
+  background-color: yellowgreen;
+  margin: auto;
+  font-size: 30px;
 }
 
 .popup-info {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .fa-times {
@@ -131,11 +137,43 @@ footer p {
   justify-content: center;
 }
 
-.commentForm {
+#username {
+  width: 200px;
+  height: 40px;
+  outline: none;
+  margin-bottom: 20px;
+}
+
+#comment {
+  width: 300px;
+  height: 80px;
+  outline: none;
+}
+
+#displayComments {
+  list-style: none;
   display: flex;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 20%;
-  gap: 10px;
-  margin-left: 550px;
+}
+
+h5 {
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.edit {
+  width: 200px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
 }
