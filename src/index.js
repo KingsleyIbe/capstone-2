@@ -9,12 +9,12 @@ let data;
 function render(data) {
   document.querySelector('h1').innerText += ` (${data.length})`;
   elem.innerHTML = '';
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < data.length; i += 1) {
     elem.innerHTML += `
-	<div class="cards-info" id='movie-${data[i].id}'>
+<div class="cards-info" id='movie-${data[i].id}'>
          <img src=${data[i].image.medium} alt="" class="img">
             <p class=description>${data[i].name}</p>
-			<div class='likes-count'> 
+<div class='likes-count'> 
       <i class="fas fa-heart fa-3x" ></i>
       <span>Likes-${data[i].likes}</span>
       </div>
@@ -25,12 +25,21 @@ function render(data) {
           </div>
         </div>`;
   }
+  async function count(obj) {
+    const response = await fetch(countUrl,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(obj),
+      });
+  }
+
   document.querySelectorAll('i').forEach((like) => {
     like.addEventListener('click', () => {
       const obj = { item_id: like.id };
       const id = Number(like.parentNode.parentNode.id.split('-')[1]);
       const movie = data.find((x) => x.id === id);
-      movie.likes++;
+      movie.likes += 1;
       obj.likes = movie.likes;
       like.parentNode.querySelector('span').innerText = `Likes-${obj.likes}`;
       count(obj);
@@ -40,7 +49,6 @@ function render(data) {
   const clearInputsFields = () => {
     const userName = document.querySelector('#username');
     const userComment = document.querySelector('#comment');
-  
     userName.value = '';
     userComment.value = '';
   };
@@ -115,19 +123,10 @@ async function getShows() {
   data = await response.json();
   const response1 = await fetch(countUrl);
   const countData = await response1.json();
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < data.length; i += 1) {
     const count = countData.find((x) => x.item_id === `movie-${data[i].id}`);
     data[i].likes = count ? count.likes : 0;
   }
   render(data);
 }
 getShows();
-
-async function count(obj) {
-  const response = await fetch(countUrl,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(obj),
-    });
-}
