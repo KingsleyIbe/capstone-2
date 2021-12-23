@@ -29,7 +29,11 @@ function render(data) {
          <img src=${data[i].image.medium} alt="" class="img">
             <p class=description>${data[i].name}</p>
 			<div class='likes-count'> 
+
       <i class="fas fa-heart fa-3x" ></i>
+
+      <i class="fas fa-heart fa-3x" id='movie-${data[i].id}'></i>
+
       <span>Likes-${data[i].likes}</span>
       </div>
             <div class="button">
@@ -37,6 +41,7 @@ function render(data) {
               <button class='reBtn'>Reservations</button>
             </div>
           </div>
+
         </div>`;
   }
   document.querySelectorAll("i").forEach((like) => {
@@ -132,6 +137,33 @@ async function count(obj) {
 const clearInputsFields = () => {
   const userName = document.querySelector("#username");
   const userComment = document.querySelector("#comment");
+
+        </div>`	
+}
+document.querySelectorAll('i').forEach((like) => {
+	like.addEventListener('click', ()=> {
+      const obj = {'item_id': like.id};
+      const id = Number(like.id.split("-")[1]);
+      const movie = data.find(x => x.id === id);
+      movie.likes++;
+      obj.likes =movie.likes;
+      like.parentNode.querySelector('span').innerText = 'likes-' + obj.likes;
+      count(obj);
+	})
+})
+}
+
+async function count(obj) {
+	const response = await fetch(countUrl, {method: 'POST',headers: {'Content-Type':'application/json'},body:JSON.stringify(obj)});
+};
+
+document.getElementsByClassName('reBtn').addEventListener('click', () => {
+  console.log('clicked')
+})
+
+
+	
+
 
   userName.value = "";
   userComment.value = "";
