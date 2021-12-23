@@ -20,14 +20,15 @@ async function getShows() {
 getShows();
 
  function render(data){
+   document.querySelector('h1').innerText += ` (${data.length})`
 	elem.innerHTML = '';
 for (let i = 0; i < data.length; i++){
 	elem.innerHTML += `
-	<div class="cards-info">
+	<div class="cards-info" id='movie-${data[i].id}'>
          <img src=${data[i].image.medium} alt="" class="img">
             <p class=description>${data[i].name}</p>
 			<div class='likes-count'> 
-      <i class="fas fa-heart fa-3x" id='movie-${data[i].id}'></i>
+      <i class="fas fa-heart fa-3x" ></i>
       <span>Likes-${data[i].likes}</span>
       </div>
             <div class="button">
@@ -40,61 +41,79 @@ for (let i = 0; i < data.length; i++){
 document.querySelectorAll('i').forEach((like) => {
 	like.addEventListener('click', ()=> {
       const obj = {'item_id': like.id};
-      const id = Number(like.id.split("-")[1]);
+      const id = Number(like.parentNode.parentNode.id.split("-")[1]);
       const movie = data.find(x => x.id === id);
       movie.likes++;
       obj.likes =movie.likes;
-      like.parentNode.querySelector('span').innerText = 'likes-' + obj.likes;
+      like.parentNode.querySelector('span').innerText = 'Likes-' + obj.likes;
       count(obj);
 	})
 })
 
 document.querySelectorAll('.cmntBtn-button').forEach((item) => {
-  item.addEventListener('click', (id) => {
-    // const obj = {'item_id': item.id};
-    // id = Number(item.id.split("-")[1]);
-    // id = data.id;
-    
+  item.addEventListener('click', async() => {
+    const id = Number(item.parentNode.parentNode.id.split("-")[1]);
+    const movie = data.find(x => x.id === id);
     const showComment = document.querySelector('.commentPopUp');
-    elem.style.display = 'none';
-    for (let i = 0; i < data.length; i++){
-      // obj.item = data.find(x => x.id === id)
-      console.log(id)
+    showComment.style.display = 'block';
+    const comments = await getComments(item.parentNode.parentNode.id);
+    console.log(comments)
       showComment.innerHTML = `
     <div class="popup">
     <span>
     <i class="fas fa-times 4x"></i>
     </span>
         <div class="popup-info">
-            <img src=${data[i].image.medium} alt="">
+            <img src=${movie.image.medium} alt="">
         </div>
-        <p class="name">${data[i].name}</p>
+        <p class="name">${movie.name}</p>
         <div class="details">
-            <p>${data[i].name}</p>
-            <p>${data[i].language}</p>
-            <p>${data[i].runtime}</p>
-            <p>${data[i].status}</p>
+            <p>Title: ${movie.name}</p>
+            <p>Language: ${movie.language}</p>
+            <p>Runtime: ${movie.runtime}</p>
+            <p>Status: ${movie.status}</p>
         </div>
-        <h5 class="comment">comments(count)</h5>
-        <ul id="displayComments"></ul>
-        <form class="commentForm">
-            <label>Add a comment</label>
+        <h5 class="comment">comments(${comments.length})</h5>
+        <ul id="displayComments">
+        ${comments.error ? '':comments.map(c => `<li><b>${c.username}</b> ${c.comment}</li>`)}
+        </ul>
+            <h5>Add a comment</h5>
+            <div class="edit">
             <input type="text" id="username" placeholder="Your name">
             <textarea type="text" id="comment" placeholder="Your comments"></textarea>
             <p id="error"></p>
             <button type="submit" id="submit" class="commentBtn">Comment</button>
-        </form>
+            </div>
     </div>
 `
-    }
-showComment.style.display = 'block';
- 
 document.querySelector('.fa-times').addEventListener('click', () => {
   showComment.style.display = 'none';
-  elem.style.display = 'grid';
 });
+const submitBtn = document.querySelector('#submit');
+submitBtn.addEventListener('click', () => {
+  const userName = document.querySelector('#username').value;
+  const userComment = document.querySelector('#comment').value;
 
-  });
+  if (userName === '' || userComment === '') {
+    const displayError = document.querySelector('#error');
+    displayError.innerHTML = '*All fields must be filled';
+    setTimeout(() => {
+      displayError.remove();
+    }, 5000);
+  } else {
+    const obj = {
+      "item_id": item.parentNode.parentNode.id,
+      "username": userName,
+      "comment": userComment
+  };
+    postComments(obj);
+    clearInputsFields();
+    const commentElement = document.querySelector('#displayComments')
+    commentElement.innerHTML += `<li><b>${obj.username}</b> ${obj.comment}</li>`;
+    console.log(comments.length);
+  }
+});
+});
 });
 }
 
@@ -104,7 +123,6 @@ async function count(obj) {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body:JSON.stringify(obj)});
-    const countData = await response.json();
 };
 
 
@@ -115,41 +133,3 @@ const clearInputsFields = () => {
   userName.value = '';
   userComment.value = '';
 };
-
-const submitBtn = document.querySelector('#submit');
-submitBtn.addEventListener('click', (e) => {
-  console.log('clicked')
-  const userName = document.querySelector('#username').value;
-  const userComment = document.querySelector('#comment').value;
-  const itemId = data.length++;
-
-  e.preventDefault();
-
-  if (userName === '' || userComment === '') {
-    const displayError = document.querySelector('#error');
-    displayError.innerHTML = '*All fields must be filled';
-    setTimeout(() => {
-      displayError.remove();
-    }, 5000);
-  } else {
-    postComments(itemId, userName, userComment);
-    clearInputsFields();
-  }
-});
-
-const commentElement = document.querySelector('#displayComments')
-const showComments = (username, comment) => {
-  const listElem = document.createElement('li');
-  const listElem1 = document.createElement('li');
-
-  listElem1.innerHTML = `${username}: ${comment} `;
-
-  listElem.appendChild(listElem1);
-  commentElement.appendChild(listElem);
-};
-
-const displayComments = async () => {
-  const allComments = await getComments();
-  allComments.forEach((comment) => showComments(comment.username, comment.comment));
-};
-displayComments();
