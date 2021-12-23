@@ -1,39 +1,34 @@
-import "./style.css";
-import { postComments, getComments } from "./comment.js";
+import './style.css';
+import { postComments, getComments } from './comment.js';
 
 const url = "https://api.tvmaze.com/shows";
-const countUrl =
-  "https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/Q4ShCASnnzP55bg7hv5u/likes";
-const elem = document.querySelector(".cards");
+const countUrl = "https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/Q4ShCASnnzP55bg7hv5u/likes"
+const elem = document.querySelector('.cards');
 let data;
 
 async function getShows() {
-  const response = await fetch(url);
-  data = await response.json();
-  const response1 = await fetch(countUrl);
-  const countData = await response1.json();
-  for (let i = 0; i < data.length; i++) {
-    const count = countData.find((x) => x["item_id"] === `movie-${data[i].id}`);
-    data[i].likes = count ? count.likes : 0;
-  }
-  render(data);
+    const response = await fetch(url);
+    data = await response.json();
+    const response1 = await fetch(countUrl);
+    const countData = await response1.json();
+    for (let i = 0; i < data.length; i++) {
+        const count = countData.find(x => x['item_id'] === `movie-${data[i].id}`);
+        data[i].likes = count ? count.likes : 0;
+    }
+    render(data);
 }
 getShows();
 
 function render(data) {
-  document.querySelector("h1").innerText += ` (${data.length})`;
-  elem.innerHTML = "";
-  for (let i = 0; i < data.length; i++) {
-    elem.innerHTML += `
+    document.querySelector('h1').innerText += ` (${data.length})`
+    elem.innerHTML = '';
+    for (let i = 0; i < data.length; i++) {
+        elem.innerHTML += `
 	<div class="cards-info" id='movie-${data[i].id}'>
          <img src=${data[i].image.medium} alt="" class="img">
             <p class=description>${data[i].name}</p>
 			<div class='likes-count'> 
-
       <i class="fas fa-heart fa-3x" ></i>
-
-      <i class="fas fa-heart fa-3x" id='movie-${data[i].id}'></i>
-
       <span>Likes-${data[i].likes}</span>
       </div>
             <div class="button">
@@ -41,36 +36,35 @@ function render(data) {
               <button class='reBtn'>Reservations</button>
             </div>
           </div>
+        </div>`
+    }
+    document.querySelectorAll('i').forEach((like) => {
+        like.addEventListener('click', () => {
+            const obj = { 'item_id': like.id };
+            const id = Number(like.parentNode.parentNode.id.split("-")[1]);
+            const movie = data.find(x => x.id === id);
+            movie.likes++;
+            obj.likes = movie.likes;
+            like.parentNode.querySelector('span').innerText = 'Likes-' + obj.likes;
+            count(obj);
+        })
+    })
 
-        </div>`;
-  }
-  document.querySelectorAll("i").forEach((like) => {
-    like.addEventListener("click", () => {
-      const obj = { item_id: like.id };
-      const id = Number(like.parentNode.parentNode.id.split("-")[1]);
-      const movie = data.find((x) => x.id === id);
-      movie.likes++;
-      obj.likes = movie.likes;
-      like.parentNode.querySelector("span").innerText = "Likes-" + obj.likes;
-      count(obj);
-    });
-  });
-
-  document.querySelectorAll(".cmntBtn-button").forEach((item) => {
-    item.addEventListener("click", async () => {
-      const id = Number(item.parentNode.parentNode.id.split("-")[1]);
-      const movie = data.find((x) => x.id === id);
-      const showComment = document.querySelector(".commentPopUp");
-      showComment.style.display = "block";
-      const comments = await getComments(item.parentNode.parentNode.id);
-      console.log(comments);
-      showComment.innerHTML = `
+    document.querySelectorAll('.cmntBtn-button').forEach((item) => {
+                item.addEventListener('click', async() => {
+                            const id = Number(item.parentNode.parentNode.id.split("-")[1]);
+                            const movie = data.find(x => x.id === id);
+                            const showComment = document.querySelector('.commentPopUp');
+                            showComment.style.display = 'block';
+                            const comments = await getComments(item.parentNode.parentNode.id);
+                            console.log(comments)
+                            showComment.innerHTML = `
     <div class="popup">
     <span>
-    <i class="fas fa-times 4x"></i>
+    <i class="fas fa-times fa-3x"></i>
     </span>
         <div class="popup-info">
-            <img src=${movie.image.medium} alt="">
+            <img src=${movie.image.medium} class ="popup-image" alt="">
         </div>
         <p class="name">${movie.name}</p>
         <div class="details">
@@ -79,13 +73,9 @@ function render(data) {
             <p>Runtime: ${movie.runtime}</p>
             <p>Status: ${movie.status}</p>
         </div>
-        <h5 class="comment">comments (${comments.length}) </h5>
+        <h5 class="comment">comments(${comments.length})</h5>
         <ul id="displayComments">
-        ${
-          comments.error
-            ? ""
-            : comments.map((c) => `<li><b>${c.username}</b> ${c.comment}</li>`)
-        }
+        ${comments.error ? '' : comments.map(c => `<li><b>${c.username}</b> ${c.comment}</li>`)}
         </ul>
             <h5>Add a comment</h5>
             <div class="edit">
@@ -95,31 +85,32 @@ function render(data) {
             <button type="submit" id="submit" class="commentBtn">Comment</button>
             </div>
     </div>
-`;
-      document.querySelector(".fa-times").addEventListener("click", () => {
-        showComment.style.display = "none";
+`
+      document.querySelector('.fa-times').addEventListener('click', () => {
+        showComment.style.display = 'none';
       });
-      const submitBtn = document.querySelector("#submit");
-      submitBtn.addEventListener("click", () => {
-        const userName = document.querySelector("#username").value;
-        const userComment = document.querySelector("#comment").value;
+      const submitBtn = document.querySelector('#submit');
+      submitBtn.addEventListener('click', () => {
+        const userName = document.querySelector('#username').value;
+        const userComment = document.querySelector('#comment').value;
 
-        if (userName === "" || userComment === "") {
-          const displayError = document.querySelector("#error");
-          displayError.innerHTML = "*All fields must be filled";
+        if (userName === '' || userComment === '') {
+          const displayError = document.querySelector('#error');
+          displayError.innerHTML = '*All fields must be filled';
           setTimeout(() => {
             displayError.remove();
           }, 5000);
         } else {
           const obj = {
-            item_id: item.parentNode.parentNode.id,
-            username: userName,
-            comment: userComment,
+            "item_id": item.parentNode.parentNode.id,
+            "username": userName,
+            "comment": userComment
           };
           postComments(obj);
           clearInputsFields();
-          const commentElement = document.querySelector("#displayComments");
+          const commentElement = document.querySelector('#displayComments')
           commentElement.innerHTML += `<li><b>${obj.username}</b> ${obj.comment}</li>`;
+          console.log(comments.length);
         }
       });
     });
@@ -127,44 +118,19 @@ function render(data) {
 }
 
 async function count(obj) {
-  const response = await fetch(countUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(obj),
-  });
-}
-
-const clearInputsFields = () => {
-  const userName = document.querySelector("#username");
-  const userComment = document.querySelector("#comment");
-
-        </div>`	
-}
-document.querySelectorAll('i').forEach((like) => {
-	like.addEventListener('click', ()=> {
-      const obj = {'item_id': like.id};
-      const id = Number(like.id.split("-")[1]);
-      const movie = data.find(x => x.id === id);
-      movie.likes++;
-      obj.likes =movie.likes;
-      like.parentNode.querySelector('span').innerText = 'likes-' + obj.likes;
-      count(obj);
-	})
-})
-}
-
-async function count(obj) {
-	const response = await fetch(countUrl, {method: 'POST',headers: {'Content-Type':'application/json'},body:JSON.stringify(obj)});
+  const response = await fetch(countUrl,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(obj)
+    });
 };
 
-document.getElementsByClassName('reBtn').addEventListener('click', () => {
-  console.log('clicked')
-})
 
+const clearInputsFields = () => {
+  const userName = document.querySelector('#username');
+  const userComment = document.querySelector('#comment');
 
-	
-
-
-  userName.value = "";
-  userComment.value = "";
+  userName.value = '';
+  userComment.value = '';
 };
