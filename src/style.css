@@ -188,7 +188,7 @@ footer p {
   }
 }
 
-@media only screen and (min-width: 768px)  {
+@media only screen and (min-width: 768px) {
   section .cards {
     display: grid;
     grid-template-columns: 1fr;

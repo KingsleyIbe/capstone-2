@@ -7,7 +7,7 @@ const elem = document.querySelector('.cards');
 let data;
 
 const render = (data) => {
-  let dataLength = 18;
+  const dataLength = 18;
   document.querySelector('h1').innerText += ` (${dataLength})`;
   elem.innerHTML = '';
   for (let i = 0; i < dataLength; i += 1) {
@@ -88,7 +88,7 @@ const render = (data) => {
             <button type="submit" id="submit" class="commentBtn">Comment</button>
             </div>
             <div>
-            <h5 class="comment">comments (${ comments.length ? comments.length : 0})</h5>
+            <h5 class="comment">comments (${comments.length ? comments.length : 0})</h5>
             <ul id="displayComments">
             ${comments.error ? '' : comments.map((c) => `<li><b>${c.username}: </b> ${c.comment}</li>`)}
             </ul>
