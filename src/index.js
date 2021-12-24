@@ -87,7 +87,7 @@ const render = (data) => {
             <button type="submit" id="submit" class="commentBtn">Comment</button>
             </div>
             <div>
-            <h5 class="comment">comments(${comments.length})</h5>
+            <h5 class="comment">comments (${comments.length ? comments.length : 0})</h5>
             <ul id="displayComments">
             ${comments.error ? '' : comments.map((c) => `<li><b>${c.username}</b> ${c.comment}</li>`)}
             </ul>
