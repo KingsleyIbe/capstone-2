@@ -19,7 +19,8 @@ Application was built with HTML, CSS (SASS), JavaScript and Webpack to meet the 
 
 ## Live Demo
 
-- [Live Demo Link](https://kingsleyibe.github.io/capstone-2/)
+- [Live Demo Link](https://kingsleyibe.github.io/capstone-2/dist/)
+- [Live Video Link](https://www.loom.com/share/fff4ce355e0d47aa9a4813fb98cf5f95)
 
 
 ## Getting Started
