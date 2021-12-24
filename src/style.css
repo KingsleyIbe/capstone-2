@@ -164,10 +164,10 @@ footer p {
 }
 
 #displayComments li {
-  width: 100%; 
+  width: 100%;
 }
 
-#displayComments li:nth-child(even) { 
+#displayComments li:nth-child(even) {
   background-color: whitesmoke;
 }
 
