@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: cadetblue;
+  background-color: pink;
 }
 
 header {
@@ -82,7 +82,7 @@ button {
   width: 250px;
   height: 40px;
   margin: 5px;
-  background-color: sandybrown;
+  background-color: rgb(235, 231, 224);
 }
 
 footer {
@@ -100,31 +100,26 @@ footer p {
 
 .commentPopUp {
   display: flex;
-  background-color: cadetblue;
-  margin: auto;
+  background-color: rgb(230, 223, 224);
   font-size: 30px;
+  position: fixed;
   top: 0;
-  left: 0;
+  justify-content: center;
+  align-items: center;
   z-index: 1;
-  height: 100%;
   width: 100%;
   overflow-y: scroll;
 }
 
-.popup-info {
+.popup-box {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 30px;
+  justify-content: space-evenly;
 }
 
 .fa-times {
   display: flex;
   justify-content: end;
-}
-
-.name {
-  display: flex;
-  justify-content: center;
 }
 
 .details {
@@ -134,6 +129,12 @@ footer p {
   gap: 30px;
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+.comment-section {
+  display: flex;
+  padding: 30px;
+  justify-content: space-evenly;
 }
 
 .comment {
@@ -149,35 +150,32 @@ footer p {
 }
 
 #comment {
-  width: 300px;
+  width: 200px;
   height: 80px;
   outline: none;
 }
 
 #displayComments {
+  width: 500px;
   list-style: none;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  border: 1px solid black;
 }
 
-h5 {
-  text-align: center;
-  padding: 20px;
-  margin-bottom: 30px;
+#displayComments li {
+  width: 100%;
+}
+
+#displayComments li:nth-child(even) {
+  background-color: whitesmoke;
 }
 
 .edit {
-  width: 200px;
-  margin: auto;
   display: flex;
   flex-direction: column;
 }
 
 #submit {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px;
+  margin: 20px 0;
 }
