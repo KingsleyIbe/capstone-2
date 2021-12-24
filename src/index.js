@@ -6,7 +6,7 @@ const countUrl = 'https://us-central1-involvement-api.cloudfunctions.net/capston
 const elem = document.querySelector('.cards');
 let data;
 
-function render(data) {
+const render = (data) => {
   document.querySelector('h1').innerText += ` (${data.length})`;
   elem.innerHTML = '';
   for (let i = 0; i < data.length; i += 1) {
@@ -25,14 +25,14 @@ function render(data) {
           </div>
         </div>`;
   }
-  async function count(obj) {
+  const count = async (obj) => {
     await fetch(countUrl,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(obj),
       });
-  }
+  };
 
   document.querySelectorAll('i').forEach((like) => {
     like.addEventListener('click', () => {
@@ -124,18 +124,18 @@ function render(data) {
       });
     });
   });
-}
+};
 
-async function getShows() {
+const getShows = async () => {
   const response = await fetch(url);
   data = await response.json();
   const response1 = await fetch(countUrl);
   const countData = await response1.json();
   for (let i = 0; i < data.length; i += 1) {
-    /* eslint-disable-next-line */
-    const count = countData.find((x) => x.item_id === `movie-${data[i].id}`);
+    const myId = `movie-${data[i].id}`;
+    const count = countData.find((x) => x.item_id === myId);
     data[i].likes = count ? count.likes : 0;
   }
   render(data);
-}
+};
 getShows();
