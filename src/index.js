@@ -59,37 +59,45 @@ function render(data) {
       const movie = data.find((x) => x.id === id);
       const showComment = document.querySelector('.commentPopUp');
       showComment.style.display = 'block';
+      elem.style.opacity = '0.1';
       const comments = await getComments(item.parentNode.parentNode.id);
       showComment.innerHTML = `
     <div class="popup">
     <span>
     <i class="fas fa-times fa-3x"></i>
     </span>
+    <div class="popup-box">
         <div class="popup-info">
             <img src=${movie.image.medium} class ="popup-image" alt="">
+            <p class="name">${movie.name}</p>
         </div>
-        <p class="name">${movie.name}</p>
         <div class="details">
             <p>Title: ${movie.name}</p>
             <p>Language: ${movie.language}</p>
             <p>Runtime: ${movie.runtime}</p>
             <p>Status: ${movie.status}</p>
         </div>
-        <h5 class="comment">comments(${comments.length})</h5>
-        <ul id="displayComments">
-        ${comments.error ? '' : comments.map((c) => `<li><b>${c.username}</b> ${c.comment}</li>`)}
-        </ul>
-            <h5>Add a comment</h5>
+        </div>
+        <div class="comment-section">
             <div class="edit">
+            <h5>Add a comment</h5>
             <input type="text" id="username" placeholder="Your name">
             <textarea type="text" id="comment" placeholder="Your comments"></textarea>
             <p id="error"></p>
             <button type="submit" id="submit" class="commentBtn">Comment</button>
             </div>
+            <div>
+            <h5 class="comment">comments(${comments.length})</h5>
+            <ul id="displayComments">
+            ${comments.error ? '' : comments.map((c) => `<li><b>${c.username}</b> ${c.comment}</li>`)}
+            </ul>
+            </div>
+            </div>
     </div>
 `;
       document.querySelector('.fa-times').addEventListener('click', () => {
         showComment.style.display = 'none';
+        elem.style.opacity = 'unset';
       });
       const submitBtn = document.querySelector('#submit');
       submitBtn.addEventListener('click', () => {

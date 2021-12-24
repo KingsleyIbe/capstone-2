@@ -4,7 +4,7 @@
 
 > This is the first milestone in the to-do-list website project.
 
-![screenshot](/src/images/screenShot.jpeg)
+![screenshot](/app.png)
 
 Application was built with HTML, CSS (SASS), JavaScript and Webpack to meet the need of a Capstone project website. 
 
