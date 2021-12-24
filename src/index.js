@@ -7,9 +7,10 @@ const elem = document.querySelector('.cards');
 let data;
 
 const render = (data) => {
-  document.querySelector('h1').innerText += ` (${data.length})`;
+  const dataLength = 18;
+  document.querySelector('h1').innerText += ` (${dataLength})`;
   elem.innerHTML = '';
-  for (let i = 0; i < data.length; i += 1) {
+  for (let i = 0; i < dataLength; i += 1) {
     elem.innerHTML += `
 <div class="cards-info" id='movie-${data[i].id}'>
          <img src=${data[i].image.medium} alt="" class="img">
@@ -87,9 +88,9 @@ const render = (data) => {
             <button type="submit" id="submit" class="commentBtn">Comment</button>
             </div>
             <div>
-            <h5 class="comment">comments(${comments.length})</h5>
+            <h5 class="comment">comments (${comments.length ? comments.length : 0})</h5>
             <ul id="displayComments">
-            ${comments.error ? '' : comments.map((c) => `<li><b>${c.username}</b> ${c.comment}</li>`)}
+            ${comments.error ? '' : comments.map((c) => `<li><b>${c.username}: </b> ${c.comment}</li>`)}
             </ul>
             </div>
             </div>
