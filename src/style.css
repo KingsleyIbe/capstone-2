@@ -104,7 +104,6 @@ footer p {
   font-size: 30px;
   position: fixed;
   top: 0;
-  /* right: 0; */
   justify-content: center;
   align-items: center;
   z-index: 1;
@@ -165,8 +164,7 @@ footer p {
 }
 
 #displayComments li {
-  width: 100%;
-  
+  width: 100%; 
 }
 
 #displayComments li:nth-child(even) { 
@@ -179,5 +177,5 @@ footer p {
 }
 
 #submit {
-  margin: 20px 0px;
+  margin: 20px 0;
 }
