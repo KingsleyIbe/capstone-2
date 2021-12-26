@@ -2,7 +2,7 @@
 
 # CAPSTONE - TWO.
 
-> This is the first milestone in the to-do-list website project.
+> MovieZone
 
 ![screenshot](/app.png)
 
