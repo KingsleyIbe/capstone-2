@@ -7,7 +7,7 @@ const elem = document.querySelector('.cards');
 let data;
 
 const render = (data) => {
-  const dataLength = 18;
+  const dataLength = 240;
   document.querySelector('h1').innerText += ` (${dataLength})`;
   elem.innerHTML = '';
   for (let i = 0; i < dataLength; i += 1) {
@@ -16,12 +16,11 @@ const render = (data) => {
          <img src=${data[i].image.medium} alt="" class="img">
             <p class=description>${data[i].name}</p>
 <div class='likes-count'> 
-      <i class="fas fa-heart fa-3x" ></i>
+      <i class="fas fa-heart fa-2x" ></i>
       <span>Likes-${data[i].likes}</span>
       </div>
             <div class="button">
               <button class="cmntBtn-button">Comments</button>
-              <button class='reBtn'>Reservations</button>
             </div>
           </div>
         </div>`;
@@ -56,16 +55,16 @@ const render = (data) => {
 
   document.querySelectorAll('.cmntBtn-button').forEach((item) => {
     item.addEventListener('click', async () => {
+      elem.style.display = 'none';
       const id = Number(item.parentNode.parentNode.id.split('-')[1]);
       const movie = data.find((x) => x.id === id);
       const showComment = document.querySelector('.commentPopUp');
       showComment.style.display = 'block';
-      elem.style.opacity = '0.1';
       const comments = await getComments(item.parentNode.parentNode.id);
       showComment.innerHTML = `
     <div class="popup">
     <span>
-    <i class="fas fa-times fa-3x"></i>
+    <i class="fas fa-times fa-2x"></i>
     </span>
     <div class="popup-box">
         <div class="popup-info">
@@ -81,23 +80,24 @@ const render = (data) => {
         </div>
         <div class="comment-section">
             <div class="edit">
-            <h5>Add a comment</h5>
-            <input type="text" id="username" placeholder="Your name">
-            <textarea type="text" id="comment" placeholder="Your comments"></textarea>
-            <p id="error"></p>
-            <button type="submit" id="submit" class="commentBtn">Comment</button>
-            </div>
             <div>
             <h5 class="comment">comments (${comments.length ? comments.length : 0})</h5>
             <ul id="displayComments">
             ${comments.error ? '' : comments.map((c) => `<li><b>${c.username}: </b> ${c.comment}</li>`)}
             </ul>
+            <h5>Add a comment</h5>
+            <input type="text" id="username" placeholder="Your name"><br>
+            <textarea type="text" id="comment" placeholder="Your comments"></textarea>
+            <p id="error"></p>
+            </div>
+            <button type="submit" id="submit" class="commentBtn">Comment</button>
             </div>
             </div>
     </div>
 `;
       document.querySelector('.fa-times').addEventListener('click', () => {
         showComment.style.display = 'none';
+        elem.style.display = 'grid';
         elem.style.opacity = 'unset';
       });
       const submitBtn = document.querySelector('#submit');

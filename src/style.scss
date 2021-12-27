@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:ital,wght@0,200;0,300;1,200;1,400&family=Pushster&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:ital,wght@0,200;0,300;1,200;1,400&family=Pushster&display=swap');
 
 * {
   margin: 0;
@@ -8,7 +8,7 @@
 
 body {
   background-color: #a8dadc;
-  font-family: "Lobster", sans-serif;
+  font-family: 'Lobster', sans-serif;
 }
 
 header {
@@ -54,7 +54,7 @@ section .cards {
 .cards-info {
   background-color: #fcd5ce;
   padding: 30px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
   transition: 0.3s;
   border: 2px solid #023e8a;
 }
@@ -181,7 +181,7 @@ footer p {
 }
 
 #displayComments {
-  color: #ca2508;
+  color: rgb(202, 37, 8);
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -226,4 +226,4 @@ footer p {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
-}/*# sourceMappingURL=style.css.map */
+}
