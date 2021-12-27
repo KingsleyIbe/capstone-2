@@ -55,6 +55,7 @@ const render = (data) => {
 
   document.querySelectorAll('.cmntBtn-button').forEach((item) => {
     item.addEventListener('click', async () => {
+      elem.style.display = 'none';
       const id = Number(item.parentNode.parentNode.id.split('-')[1]);
       const movie = data.find((x) => x.id === id);
       const showComment = document.querySelector('.commentPopUp');
@@ -82,7 +83,7 @@ const render = (data) => {
             <div>
             <h5 class="comment">comments (${comments.length ? comments.length : 0})</h5>
             <ul id="displayComments">
-            ${comments.error ? '' : comments.map((c) => `<li><b>${c.username} </b> ${c.comment}</li>`)}
+            ${comments.error ? '' : comments.map((c) => `<li><b>${c.username}: </b> ${c.comment}</li>`)}
             </ul>
             <h5>Add a comment</h5>
             <input type="text" id="username" placeholder="Your name"><br>
@@ -96,6 +97,7 @@ const render = (data) => {
 `;
       document.querySelector('.fa-times').addEventListener('click', () => {
         showComment.style.display = 'none';
+        elem.style.display = 'grid';
         elem.style.opacity = 'unset';
       });
       const submitBtn = document.querySelector('#submit');
